@@ -99,7 +99,7 @@ function searchCosPoints(v,a) {
 function draw() {
   // calculate strategy P&L
   var cosPoints = []; 
-  for (var i=50; i<250; i+=0.25){ 
+  for (var i=0; i<250; i+=0.25){ 
 	var sum={x:0};
 	$('input[type="checkbox"]').each(function(iteration,item) {
 		aa=item.checked?mygv("#"+item.id,i):0;
