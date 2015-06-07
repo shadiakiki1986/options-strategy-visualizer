@@ -1,0 +1,163 @@
+<html>
+<head>
+
+<script type="text/javascript" src="js/vendor/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="js/vendor/jquery.jqplot.min.js"></script>
+<link rel="stylesheet" type="text/css" href="js/vendor/jquery.jqplot.min.css" />
+<script type="text/javascript" src="js/vendor/jqplot.cursor.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+</head>
+<body>
+<h1><img src="img/v.jpeg" width="50px"> &nbsp;&nbsp;&nbsp; Options Strategy Visualizer</h1>
+<!--
+<a href="example1.html">Example 1</a>&nbsp;
+|&nbsp;<a href="example2.html">Example 2</a>&nbsp;
+|&nbsp;<a href="example3.html">Example 3</a>&nbsp;
+<br/>
+-->
+<div style="color:red">All option maturities are matching.</div>
+Based on CBOE margin manual p 18. <br/>
+<input type="button" id="but" value="Cache" />
+<input type="button" id="but2" value="Clear" />
+<script type="text/javascript">
+$("#but").on("click", function() {
+	var imgData = $('#chart3').jqplotToImageStr({}); // given the div id of your plot, get the img data
+	var imgElem = $('<img/>').attr('src',imgData); // create an img and add the data to it
+	$('#imgChart3').prepend(imgElem); // append the img to the DOM
+});
+
+$("#but2").on("click", function() {
+	$('#imgChart3').empty(); // clear
+});
+</script>
+<ul>
+<li>Implied vol. (perc): <input type="range" id="impVol" min="1" max="100" value="25" step="1" /><span id="impVolText">25</span> %</li>
+<li>Time to maturity: <input type="range" id="Tmt" min="0" max="4" value="0.25" step="0.01" /><span id="TmtText">0.25</span> years</li>
+<li>Margin to be conservative by: <input type="range" id="rd" min="0" max="50" value="7" step="1" /><span id="rdText">7</span> %</li>
+<li>Standard margin requirement: 100 x <span id="mr3">-</span> Cur (based on <a href="http://www.cboe.com/micro/margin/strategy.aspx">CBOE rulebook</a>)</li>
+<li>Conservative margin: 100 x <span id="mr2">-</span> Cur</li>
+</ul>
+<table border=0 width=2050px>
+<tr>
+	<td>
+	<ol>
+	<li>
+		<form id="i0">
+			Underlying
+			<input type="range" name="St" min="00" max="200" id="St" value="150" > &nbsp; 
+			<span id="underlyingText">150</span>
+		</form>
+	</li>
+	<li>
+		<form id="i1">
+		<input type="radio" name="P" value="n" checked />Neutral &nbsp;
+		<input type="radio" name="P" value="L" />Long &nbsp;
+		<input type="radio" name="P" value="S" />Short &nbsp;
+		|&nbsp;
+		Qty <input type="range" name="Q" min="1" max="5" value="1"> &nbsp;
+		|&nbsp;
+		<input type="radio" name="O" value="C" checked />Call &nbsp;
+		<input type="radio" name="O" value="P" />Put &nbsp;
+		<input type="radio" name="O" value="S" />Security &nbsp;
+		|&nbsp;
+		Strike <input type="range" name="K" min="50" max="199" value="100"> &nbsp;
+		|&nbsp;
+		Market Value <input type="range" name="V" min="0" max="10" step="0.2" value="0"> &nbsp;
+		</form>
+	</li>
+	<li>
+		<form id="i2">
+		<input type="radio" name="P" value="n" checked />Neutral &nbsp;
+		<input type="radio" name="P" value="L" />Long &nbsp;
+		<input type="radio" name="P" value="S" />Short &nbsp;
+		|&nbsp;
+		Qty <input type="range" name="Q" min="1" max="5" value="1"> &nbsp;
+		|&nbsp;
+		<input type="radio" name="O" value="C" checked />Call &nbsp;
+		<input type="radio" name="O" value="P" />Put &nbsp;
+		<input type="radio" name="O" value="S" />Security &nbsp;
+		|&nbsp;
+		Strike <input type="range" name="K" min="50" max="199" value="100"> &nbsp;
+		|&nbsp;
+		Market Value <input type="range" name="V" min="0" max="10" step="0.2" value="0"> &nbsp;
+		</form>
+	</li>
+	<li>
+		<form id="i3">
+		<input type="radio" name="P" value="n" checked />Neutral &nbsp;
+		<input type="radio" name="P" value="L" />Long &nbsp;
+		<input type="radio" name="P" value="S" />Short &nbsp;
+		|&nbsp;
+		Qty <input type="range" name="Q" min="1" max="5" value="1"> &nbsp;
+		|&nbsp;
+		<input type="radio" name="O" value="C" checked />Call &nbsp;
+		<input type="radio" name="O" value="P" />Put &nbsp;
+		<input type="radio" name="O" value="S" />Security &nbsp;
+		|&nbsp;
+		Strike <input type="range" name="K" min="50" max="199" value="100"> &nbsp;
+		|&nbsp;
+		Market Value <input type="range" name="V" min="0" max="10" step="0.2" value="0"> &nbsp;
+		</form>
+	</li>
+	<li>
+		<form id="i4">
+		<input type="radio" name="P" value="n" checked />Neutral &nbsp;
+		<input type="radio" name="P" value="L" />Long &nbsp;
+		<input type="radio" name="P" value="S" />Short &nbsp;
+		|&nbsp;
+		Qty <input type="range" name="Q" min="1" max="5" value="1"> &nbsp;
+		|&nbsp;
+		<input type="radio" name="O" value="C" checked />Call &nbsp;
+		<input type="radio" name="O" value="P" />Put &nbsp;
+		<input type="radio" name="O" value="S" />Security &nbsp;
+		|&nbsp;
+		Strike <input type="range" name="K" min="50" max="199" value="100"> &nbsp;
+		|&nbsp;
+		Market Value <input type="range" name="V" min="0" max="10" step="0.2" value="0"> &nbsp;
+		</form>
+	</li>
+	</ol>	
+	</td>
+	<td></td>
+</tr>
+</table>
+<table border=0 width=2050px>
+<tr>
+	<td><ol id="ol"></ol></td>
+	<td><div id="chart3" style="height:300px; width:500px;"></div></td>
+</tr>
+<tr>
+	<td width=500px></td>
+	<td width="*" id="imgChart3" style="max-width:1550px;"></td>
+</tr>
+</table>
+<script type="text/javascript">
+
+function doMyUpdate() {
+	port2='[';
+	$("#i1,#i2,#i3,#i4").each(function() {
+	if($("#"+$(this).attr("id")+" input[name='P']:checked").val()!="n") {
+	port2+=	'{'+
+		'"P":"'+$("#"+$(this).attr("id")+" input[name='P']:checked").val()+'",'+
+		'"Q":"'+$("#"+$(this).attr("id")+" input[name='Q']").val()+'",'+
+		'"K":"'+$("#"+$(this).attr("id")+" input[name='K']").val()+'",'+
+		'"O":"'+$("#"+$(this).attr("id")+" input[name='O']:checked").val()+'",'+
+		'"V":"'+$("#"+$(this).attr("id")+" input[name='V']").val()+'",'+
+		'"St":"'+$("#i0 input[name='St']").val()+'",'+
+		'"Comment":"..."'+
+	'},';
+	}});
+	if(port2.substring(port2.length-1,port2.length)==",") port2 = port2.substring(0, port2.length - 1);
+	port2+=']';
+	if(port2!="[]") handlePort(port2);
+}
+
+$(document).ready(function() {
+//	$("#i1,#i2,#i3,#i4 input").each(function() { $(this).click(doMyUpdate); });
+//	$("#i0,#i1,#i2,#i3,#i4 input").each(function() { $(this).on("input change",doMyUpdate); });
+	$("input").each(function() { $(this).on("input change",doMyUpdate); });
+
+});
+</script>
+</body>
+</html>
