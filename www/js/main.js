@@ -4,7 +4,7 @@ myJsonParse=function(aaa) {
 	oo.K=parseInt(oo.K);
 	oo.V=Number(oo.V);
 	oo.St=parseInt(oo.St);
-	if(!oo.Tmt) oo.Tmt=$('#Tmt').val(); else oo.Tmt=Number(oo.Tmt);
+	if(!oo.Tmt) alert("No T-t set"); else oo.Tmt=Number(oo.Tmt);
 	return oo;
 };
 
@@ -152,16 +152,15 @@ function draw() {
 	[[St,0],[St,cpSt]],
 	[[cpSt_min_i,cpSt_min],[cpSt_min_i,0]]
 	];
-  var risk2=Math.round(Math.min(0,cpSt)*100)/100;
-  var risk=(risk2<0?risk2+Math.round((cpSt_min-cpSt)*100)/100:0);
-
- $("#mr2").text(risk);
- $("#mr3").text(risk2);
+  var risk2=Math.min(0,Math.round(cpSt*100)/100);
+  var risk=Math.min(0,Math.round(cpSt_min*100)/100);
+ $("#mrStandard").text(risk2);
+ $("#mrConservative").text(risk);
   // make plot
   $("#chart3").empty();
   var plot3 = $.jqplot('chart3', chartPlots, {  
       series:[{showMarker:false}],
-      title: 'P&L, risk='+risk+', loss='+risk2,
+      title: 'P&L<br> Margin:<br> standard = 100 x '+risk2+'<br> conservative = 100 x '+risk,
       axes:{
         xaxis:{
           label:'S_T',
@@ -197,7 +196,6 @@ function draw() {
 //
 //var port; //=JSON.parse('[{"P":"L","Q":1,  "K":125,"O":"C","V":3.75,"St":125},{"P":"S","Q":1,  "K":30, "O":"C","V":0.0625,"St":125},{"P":"S","Q":1,  "K":90, "O":"P","V":7,"St":125},{"P":"L","Q":3,        "O":"S","V":0,"St":125}]');
 function handlePort(port) {
-console.log(port);
 	if(!$.isArray(port)) port=JSON.parse(port);
 
 	$("#ol").empty();
@@ -208,11 +206,11 @@ console.log(port);
 			).append(
 				(item.P=="L"?"Long":"Short")
 				+" "+item.Q+"x"
-				+(item.O=="C"||item.O=="P"?" Nov":"")
+				+(item.O=="C"||item.O=="P"?" T-t="+item.Tmt+" years":"")
 				+" "+item.K
 				+(item.O=="C"?" Call":(item.O=="P"?" Put":" Security"))
 				+(item.O=="C"||item.O=="P"?" at "+item.V:"")
-				+ " (underlying at "+item.St+", "+item.Comment+")"
+				+ " (underlying at "+item.St+")" //+", "+item.Comment+")"
 			)
 		);
 	});

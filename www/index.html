@@ -15,7 +15,6 @@
 |&nbsp;<a href="example3.html">Example 3</a>&nbsp;
 <br/>
 -->
-<div style="color:red">All option maturities are matching.</div>
 Based on CBOE margin manual p 18. <br/>
 <input type="button" id="but" value="Cache" />
 <input type="button" id="but2" value="Clear" />
@@ -30,13 +29,22 @@ $("#but2").on("click", function() {
 	$('#imgChart3').empty(); // clear
 });
 </script>
+<table border=1>
+<tr><td>
 <ul>
 <li>Implied vol. (perc): <input type="range" id="impVol" min="1" max="100" value="25" step="1" /><span id="impVolText">25</span> %</li>
-<li>Time to maturity: <input type="range" id="Tmt" min="0" max="4" value="0.25" step="0.01" /><span id="TmtText">0.25</span> years</li>
-<li>Margin to be conservative by: <input type="range" id="rd" min="0" max="50" value="7" step="1" /><span id="rdText">7</span> %</li>
-<li>Standard margin requirement: 100 x <span id="mr3">-</span> Cur (based on <a href="http://www.cboe.com/micro/margin/strategy.aspx">CBOE rulebook</a>)</li>
-<li>Conservative margin: 100 x <span id="mr2">-</span> Cur</li>
+<li>Margin to be conservative by: <input type="range" id="rd" min="0" max="100" value="100" step="1" /><span id="rdText">100</span> %</li>
+<li>Standard margin requirement: 100 x <span id="mrStandard">-</span> Cur (based on <a href="http://www.cboe.com/micro/margin/strategy.aspx">CBOE rulebook</a>)</li>
+<li>Conservative margin: 100 x <span id="mrConservative">-</span> Cur</li>
 </ul>
+</td><td>
+Presets
+<ul>
+<li>Straddle: <a href="#" onclick="setExample('Short Straddle')">Short</a>, <a href="#" onclick="setExample('Long Straddle')">Long</a> </li>
+<li>Spread: <a href="#" onclick="setExample('Short Spread')">Short</a>, <a href="#" onclick="setExample('Long Spread')">Long</a> </li>
+<li>Calendar Spread: <a href="#" onclick="setExample('Short Calendar Spread')">Short</a>, <a href="#" onclick="setExample('Long Calendar Spread')">Long</a> </li>
+</ul>
+</td></tr></table>
 <table border=0 width=2050px>
 <tr>
 	<td>
@@ -44,7 +52,7 @@ $("#but2").on("click", function() {
 	<li>
 		<form id="i0">
 			Underlying
-			<input type="range" name="St" min="00" max="200" id="St" value="150" > &nbsp; 
+			<input type="range" name="St" min="00" max="200" id="St" value="150" step="0.01" > &nbsp; 
 			<span id="underlyingText">150</span>
 		</form>
 	</li>
@@ -54,15 +62,17 @@ $("#but2").on("click", function() {
 		<input type="radio" name="P" value="L" />Long &nbsp;
 		<input type="radio" name="P" value="S" />Short &nbsp;
 		|&nbsp;
-		Qty <input type="range" name="Q" min="1" max="5" value="1"> &nbsp;
+		Qty <input type="range" name="Q" min="1" max="20" value="1"> &nbsp;
 		|&nbsp;
 		<input type="radio" name="O" value="C" checked />Call &nbsp;
 		<input type="radio" name="O" value="P" />Put &nbsp;
 		<input type="radio" name="O" value="S" />Security &nbsp;
 		|&nbsp;
-		Strike <input type="range" name="K" min="50" max="199" value="100"> &nbsp;
+		Strike <input type="range" name="K" min="0" max="199" value="100"> &nbsp;
 		|&nbsp;
-		Market Value <input type="range" name="V" min="0" max="10" step="0.2" value="0"> &nbsp;
+		Market Value <input type="range" name="V" min="0" max="10" step="0.01" value="0"> &nbsp;
+		|&nbsp;
+		Time to maturity <input type="range" name="Tmt" min="0" max="4" step="0.05" value="0.25"> years &nbsp;
 		</form>
 	</li>
 	<li>
@@ -71,15 +81,17 @@ $("#but2").on("click", function() {
 		<input type="radio" name="P" value="L" />Long &nbsp;
 		<input type="radio" name="P" value="S" />Short &nbsp;
 		|&nbsp;
-		Qty <input type="range" name="Q" min="1" max="5" value="1"> &nbsp;
+		Qty <input type="range" name="Q" min="1" max="20" value="1"> &nbsp;
 		|&nbsp;
 		<input type="radio" name="O" value="C" checked />Call &nbsp;
 		<input type="radio" name="O" value="P" />Put &nbsp;
 		<input type="radio" name="O" value="S" />Security &nbsp;
 		|&nbsp;
-		Strike <input type="range" name="K" min="50" max="199" value="100"> &nbsp;
+		Strike <input type="range" name="K" min="0" max="199" value="100"> &nbsp;
 		|&nbsp;
-		Market Value <input type="range" name="V" min="0" max="10" step="0.2" value="0"> &nbsp;
+		Market Value <input type="range" name="V" min="0" max="10" step="0.01" value="0"> &nbsp;
+		|&nbsp;
+		Time to maturity <input type="range" name="Tmt" min="0" max="4" step="0.01" value="0.25"> years &nbsp;
 		</form>
 	</li>
 	<li>
@@ -88,15 +100,17 @@ $("#but2").on("click", function() {
 		<input type="radio" name="P" value="L" />Long &nbsp;
 		<input type="radio" name="P" value="S" />Short &nbsp;
 		|&nbsp;
-		Qty <input type="range" name="Q" min="1" max="5" value="1"> &nbsp;
+		Qty <input type="range" name="Q" min="1" max="20" value="1"> &nbsp;
 		|&nbsp;
 		<input type="radio" name="O" value="C" checked />Call &nbsp;
 		<input type="radio" name="O" value="P" />Put &nbsp;
 		<input type="radio" name="O" value="S" />Security &nbsp;
 		|&nbsp;
-		Strike <input type="range" name="K" min="50" max="199" value="100"> &nbsp;
+		Strike <input type="range" name="K" min="0" max="199" value="100"> &nbsp;
 		|&nbsp;
-		Market Value <input type="range" name="V" min="0" max="10" step="0.2" value="0"> &nbsp;
+		Market Value <input type="range" name="V" min="0" max="10" step="0.01" value="0"> &nbsp;
+		|&nbsp;
+		Time to maturity <input type="range" name="Tmt" min="0" max="4" step="0.01" value="0.25"> years &nbsp;
 		</form>
 	</li>
 	<li>
@@ -105,15 +119,17 @@ $("#but2").on("click", function() {
 		<input type="radio" name="P" value="L" />Long &nbsp;
 		<input type="radio" name="P" value="S" />Short &nbsp;
 		|&nbsp;
-		Qty <input type="range" name="Q" min="1" max="5" value="1"> &nbsp;
+		Qty <input type="range" name="Q" min="1" max="20" value="1"> &nbsp;
 		|&nbsp;
 		<input type="radio" name="O" value="C" checked />Call &nbsp;
 		<input type="radio" name="O" value="P" />Put &nbsp;
 		<input type="radio" name="O" value="S" />Security &nbsp;
 		|&nbsp;
-		Strike <input type="range" name="K" min="50" max="199" value="100"> &nbsp;
+		Strike <input type="range" name="K" min="0" max="199" value="100"> &nbsp;
 		|&nbsp;
-		Market Value <input type="range" name="V" min="0" max="10" step="0.2" value="0"> &nbsp;
+		Market Value <input type="range" name="V" min="0" max="10" step="0.01" value="0"> &nbsp;
+		|&nbsp;
+		Time to maturity <input type="range" name="Tmt" min="0" max="4" step="0.01" value="0.25"> years &nbsp;
 		</form>
 	</li>
 	</ol>	
@@ -133,6 +149,38 @@ $("#but2").on("click", function() {
 </table>
 <script type="text/javascript">
 
+function setExample(what) {
+	port={};
+	switch(what) {
+	case "Short Spread": port={ "St":125, "i1": {"P":"L", "Q":1, "K":125, "O":"C", "V":1, "Tmt":0.25}, "i2": {"P":"S", "Q":1, "K":100, "O":"C", "V":5, "Tmt":0.25} }; break;
+	case "Long Spread": port={ "St":125, "i1": {"P":"S", "Q":1, "K":125, "O":"C", "V":1, "Tmt":0.25}, "i2": {"P":"L", "Q":1, "K":100, "O":"C", "V":5, "Tmt":0.25} }; break;
+	case "Short Straddle": port={ "St":125, "i1": {"P":"L", "Q":1, "K":125, "O":"P", "V":10, "Tmt":0.25}, "i2": {"P":"L", "Q":1, "K":120, "O":"C", "V":10, "Tmt":0.25} }; break;
+	case "Long Straddle": port={ "St":125, "i1": {"P":"S", "Q":1, "K":125, "O":"P", "V":10, "Tmt":0.25}, "i2": {"P":"S", "Q":1, "K":120, "O":"C", "V":10, "Tmt":0.25} }; break;
+	case "Short Calendar Spread": port={ "St":125, "i1": {"P":"L", "Q":1, "K":125, "O":"C", "V":1, "Tmt":0}, "i2": {"P":"S", "Q":1, "K":125, "O":"C", "V":5, "Tmt":0.25} }; break;
+	case "Long Calendar Spread": port={ "St":125, "i1": {"P":"S", "Q":1, "K":125, "O":"C", "V":1, "Tmt":0}, "i2": {"P":"L", "Q":1, "K":125, "O":"C", "V":5, "Tmt":0.25} }; break;
+	default: alert("Invalid preset");
+	}
+
+	$("#i0 input[name='St']").val(port.St);
+	$("#i1,#i2,#i3,#i4").each(function() {
+		yy=$(this).attr("id");
+		if(!port.hasOwnProperty(yy)) {
+			$("#"+yy+" input[name='P']:eq('n')").prop("checked","checked");
+		} else {
+			xx=port[yy];
+			$("#"+yy+" input[name='P']").prop("checked",false);
+			$("#"+yy+" input[name='P'][value='"+xx.P+"']").prop("checked","checked");
+			$("#"+yy+" input[name='Q']").val(xx.Q);
+			$("#"+yy+" input[name='K']").val(xx.K);
+			$("#"+yy+" input[name='O']").prop("checked",false);
+			$("#"+yy+" input[name='O'][value='"+xx.O+"']").prop("checked","checked");
+			$("#"+yy+" input[name='V']").val(xx.V);
+			$("#"+yy+" input[name='Tmt']").val(xx.Tmt);
+		}
+	});
+	doMyUpdate();	
+}
+
 function doMyUpdate() {
 	port2='[';
 	$("#i1,#i2,#i3,#i4").each(function() {
@@ -143,6 +191,7 @@ function doMyUpdate() {
 		'"K":"'+$("#"+$(this).attr("id")+" input[name='K']").val()+'",'+
 		'"O":"'+$("#"+$(this).attr("id")+" input[name='O']:checked").val()+'",'+
 		'"V":"'+$("#"+$(this).attr("id")+" input[name='V']").val()+'",'+
+		'"Tmt":"'+$("#"+$(this).attr("id")+" input[name='Tmt']").val()+'",'+
 		'"St":"'+$("#i0 input[name='St']").val()+'",'+
 		'"Comment":"..."'+
 	'},';
