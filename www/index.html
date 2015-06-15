@@ -139,7 +139,10 @@ Presets
 </table>
 <table border=0 width=2050px>
 <tr>
-	<td><ol id="ol"></ol></td>
+	<td>
+		<ol id="ol"></ol>
+		<p>API <a href="#" id="apiLink">link</a></p>
+	</td>
 	<td><div id="chart3" style="height:300px; width:500px;"></div></td>
 </tr>
 <tr>
@@ -199,6 +202,24 @@ function doMyUpdate() {
 	if(port2.substring(port2.length-1,port2.length)==",") port2 = port2.substring(0, port2.length - 1);
 	port2+=']';
 	if(port2!="[]") handlePort(port2);
+
+	//-----------------------------
+	apiLink="S="+$("#i0 input[name='St']").val()+"&T=0.2&port=[";
+	$("#i1,#i2,#i3,#i4").each(function() {
+	if($("#"+$(this).attr("id")+" input[name='P']:checked").val()!="n") {
+		qs=$("#"+$(this).attr("id")+" input[name='P']:checked").val();
+		qs=qs=="S"?-1:1;
+		apiLink+='{'+
+			'"Q":'+qs*$("#"+$(this).attr("id")+" input[name='Q']").val()+','+
+			'"K":'+$("#"+$(this).attr("id")+" input[name='K']").val()+','+
+			'"O":"'+$("#"+$(this).attr("id")+" input[name='O']:checked").val()+'",'+
+			'"r":0,"v":0.25'+
+			'},';
+		}
+	});
+	if(apiLink.substring(apiLink.length-1,apiLink.length)==",") apiLink = apiLink.substring(0, apiLink.length - 1);
+	apiLink+=']';
+        document.getElementById("apiLink").href="api/optionsStrategyMargin.php?"+apiLink;
 }
 
 $(document).ready(function() {
