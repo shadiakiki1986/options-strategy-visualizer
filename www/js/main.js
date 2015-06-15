@@ -201,9 +201,11 @@ function handlePort(port) {
 	$("#ol").empty();
 	$.each(port, function(iteration,item) {
 		// update item Tmt to remove the physical time passed
-		item.Tmt=Math.max(0,item.TMaturity-$('#tPhysical').val());
-		// check if expired
-		expired=item.Tmt<=0;
+               item.Tmt=item.TMaturity-$('#tPhysical').val();
+               // Not doing Math.max to distinguish between expired and at expiry // item.Tmt=Math.max(0,item.TMaturity-$('#tPhysical').val());^M
+               // check if expired
+               expired=item.Tmt<0;
+
 		// list
 		$("#ol").append(
 			$(document.createElement("li")
