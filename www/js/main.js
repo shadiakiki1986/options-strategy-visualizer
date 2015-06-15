@@ -98,8 +98,15 @@ function searchCosPoints(v,a) {
 //
 function draw() {
   // calculate strategy P&L
+
+  var St={St:0};
+  $('input[type="checkbox"]').each(function(iteration,item) {
+    St.St=myJsonParse($("#"+item.id).prop("value")).St;
+  }); // as a matter of fact, taking St of any of those would have worked, so no need to iterate
+  St=St.St;
+
   var cosPoints = []; 
-  for (var i=0; i<250; i+=0.25){ 
+  for (var i=0; i<2*St; i+=0.25){ 
 	var sum={x:0};
 	$('input[type="checkbox"]').each(function(iteration,item) {
 		aa=item.checked?mygv("#"+item.id,i):0;
@@ -107,11 +114,6 @@ function draw() {
 	});
      cosPoints.push([i,sum.x]); 
   } 
-  var St={St:0};
-	$('input[type="checkbox"]').each(function(iteration,item) {
-		St.St=myJsonParse($("#"+item.id).prop("value")).St;
-	}); // as a matter of fact, taking St of any of those would have worked, so no need to iterate
-	St=St.St;
 
   // risk is +- 7 %
   if($("#rd").length != 0) {
