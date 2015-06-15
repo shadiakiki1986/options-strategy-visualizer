@@ -1,5 +1,6 @@
 # options-strategy-visualizer
-Small tool that plots the total payoff of a strategy combining financial call/put options and/or the underlying
+* Small tool that plots the total payoff of a strategy combining financial call/put options and/or the underlying
+* [![Build Status](https://secure.travis-ci.org/shadiakiki1986/options-strategy-visualizer.png)](http://travis-ci.org/shadiakiki1986/options-strategy-visualizer)
 
 # Motivation
 The reason I wrote this tool is that after some [research](http://lmgtfy.com/?q=options+strategy+visualize) for an online tool that visualizes option strategies, I didn't find anything useful.
