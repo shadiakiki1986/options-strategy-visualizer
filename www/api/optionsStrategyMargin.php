@@ -52,6 +52,12 @@ foreach($port as $pi) array_push($port2,array("q"=>$pi["Q"],"o"=>new BlackSchole
 // build vector of S around underlying
 $Sx=range(0,2*$S,1);
 
-// calculate
-$zc=new OptionsStrategy($port2);
-echo $zc->margin($Sx,$T);
+try {
+	// calculate
+	$zc=new OptionsStrategy($port2);
+	echo $zc->margin($Sx,$T);
+} catch (Exception $e) {
+        echo $e->getMessage();
+        return;
+}
+
