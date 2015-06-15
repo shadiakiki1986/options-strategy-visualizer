@@ -6,13 +6,13 @@ header("Access-Control-Allow-Origin: *");
  Margin required on an options strategy
 
  USAGE
-	CLI	php optionsStrategyMargin.php 100 0 '[{"Q": 1,"O":"c","K": 70,"r":0,"v":0.25,"T":0.2},{"Q":-1,"O":"c","K": 80,"r":0,"v":0.25,"T":0.2}]'
-		php optionsStrategyMargin.php 100 0 '[{"Q":-1,"O":"c","K": 70,"r":0,"v":0.25,"T":0.2},{"Q": 1,"O":"c","K": 80,"r":0,"v":0.25,"T":0.2}]'
-		php optionsStrategyMargin.php 125 0 '[{"Q":-1,"O":"c","K":125,"r":0,"v":0.25,"T":0.2},{"Q": 1,"O":"c","K":100,"r":0,"v":0.25,"T":0.2}]'
+	CLI	php optionsStrategyMargin.php 100 0 '[{"Q": 1,"O":"C","K": 70,"r":0,"v":0.25,"T":0.2},{"Q":-1,"O":"C","K": 80,"r":0,"v":0.25,"T":0.2}]'
+		php optionsStrategyMargin.php 100 0 '[{"Q":-1,"O":"C","K": 70,"r":0,"v":0.25,"T":0.2},{"Q": 1,"O":"C","K": 80,"r":0,"v":0.25,"T":0.2}]'
+		php optionsStrategyMargin.php 125 0 '[{"Q":-1,"O":"C","K":125,"r":0,"v":0.25,"T":0.2},{"Q": 1,"O":"C","K":100,"r":0,"v":0.25,"T":0.2}]'
 
 	AJAX
 		 $.ajax({
-		    url:'http://shadi.ly/zboota-server/api/optionsStrategyMargin.php?S=100&t=0.2&port=[{"Q":1,"O":"c","K":70,"r":0,"v":0.25},{"Q":-1,"O":"c","K":80,"r":0,"v":0.25}]',
+		    url:'http://shadi.ly/zboota-server/api/optionsStrategyMargin.php?S=100&t=0.2&port=[{"Q":1,"O":"C","K":70,"r":0,"v":0.25},{"Q":-1,"O":"C","K":80,"r":0,"v":0.25}]',
 		    success: function (data) {
 			console.log(data);
 		    },

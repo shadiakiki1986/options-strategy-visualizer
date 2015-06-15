@@ -20,17 +20,12 @@ function __construct($portfolio) {
 	}, $portfolio);
 
 	// test no duplicates
-	$ids=array_map(function($p) { return $this->portfolioId($p["o"]); },$portfolio);
+	$ids=array_map(function($p) { return $p["o"]->id(); },$portfolio);
 	if(count($ids)!=count(array_unique($ids))) throw new Exception("Duplicate options in portfolio detected");
 
 	// portfolio being keyed by portfolio ID and stored in class member
 	$this->portfolio=array();
-	foreach($portfolio as $p) $this->portfolio[$this->portfolioId($p["o"])]=$p;
-}
-
-function portfolioId($p) {
-// pass $this->portfolio[i]["o"]
-	return "".$p->call_put_flag."_".$p->X."_".$p->r."_".$p->v."_".$p->T;
+	foreach($portfolio as $p) $this->portfolio[$p["o"]->id]=$p;
 }
 
 function loss($S,$t,$mult=1) {

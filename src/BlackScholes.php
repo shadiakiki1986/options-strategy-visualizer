@@ -9,6 +9,7 @@ function __construct($call_put_flag, $X, $r, $v, $T) {
 // call_put_flag: 'c' or anything else for put
 // This T is the maturity date (compare to t in value function)
 
+	if(!in_array($call_put_flag,array("C","P","S"))) throw new Exception("Unsupported call_put_flag=$call_put_flag");
 	$this->call_put_flag=$call_put_flag;
 	$this->X=$X;
 	$this->r=$r;
@@ -37,6 +38,11 @@ function __construct($call_put_flag, $X, $r, $v, $T) {
 
 	function value ($S, $t) {
 	// t: physical time
+		if($this->call_put_flag=="S") {
+			$o=array();
+			foreach($S as $Si) $o[(string)$Si]=$Si;
+			return $o;
+		}
 		if(is_array($S)) {
 			$o=array();
 			foreach($S as $Si) $o[(string)$Si]=$this->value($Si,$t);
@@ -54,7 +60,7 @@ function __construct($call_put_flag, $X, $r, $v, $T) {
 
 		$d1 = ( log($S / $this->X) + ($this->r + pow($this->v, 2) / 2) * $Tmt ) / ( $this->v * pow($Tmt, 0.5) );
 		$d2 = $d1 - $this->v * pow($Tmt, 0.5);
-		if ($this->call_put_flag == 'c') {
+		if ($this->call_put_flag == 'C') {
 			return $S * $this->CND($d1) - $this->X * exp( -$this->r * $Tmt ) * $this->CND($d2);
 		} else { 
 			return $this->X * exp( -$this->r * $Tmt ) * $this->CND(-$d2) - $S * $this->CND(-$d1);
@@ -62,11 +68,15 @@ function __construct($call_put_flag, $X, $r, $v, $T) {
 	}
 
 	function value0($S) {
-		if ($this->call_put_flag == 'c') {
+		if ($this->call_put_flag == 'C') {
 			return max($S - $this->X, 0);
 		} else { 
 			return max($this->X - $S, 0);
 		}
 	}
+
+function id() {
+	return "".$this->call_put_flag."_".$this->X."_".$this->r."_".$this->v."_".$this->T;
+}
 
 } // end class

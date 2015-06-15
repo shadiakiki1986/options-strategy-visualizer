@@ -221,13 +221,11 @@ function doMyUpdate() {
 	if($("#"+$(this).attr("id")+" input[name='P']:checked").val()!="n") {
 		qs=$("#"+$(this).attr("id")+" input[name='P']:checked").val();
 		qs=qs=="S"?-1:1;
-		ot=$("#"+$(this).attr("id")+" input[name='O']:checked").val();
-		ot=(ot=="C"?"c":(ot=="P"?"p":"UNSUPPORTED"));
 		apiLink+='{'+
 			'"Q":'+qs*$("#"+$(this).attr("id")+" input[name='Q']").val()+','+
 			'"K":'+$("#"+$(this).attr("id")+" input[name='K']").val()+','+
 			'"T":'+$("#"+$(this).attr("id")+" input[name='TMaturity']").val()+','+
-			'"O":"'+ot+'",'+
+			'"O":"'+$("#"+$(this).attr("id")+" input[name='O']:checked").val()+'",'+
 			'"r":0,"v":0.25'+
 			'},';
 		}
