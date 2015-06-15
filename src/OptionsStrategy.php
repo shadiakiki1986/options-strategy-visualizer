@@ -30,7 +30,7 @@ function __construct($portfolio) {
 
 function portfolioId($p) {
 // pass $this->portfolio[i]["o"]
-	return "".$p->call_put_flag."_".$p->X."_".$p->r."_".$p->v;
+	return "".$p->call_put_flag."_".$p->X."_".$p->r."_".$p->v."_".$p->T;
 }
 
 function loss($S,$t,$mult=1) {
