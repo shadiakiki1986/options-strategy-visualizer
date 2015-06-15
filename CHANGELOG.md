@@ -5,6 +5,7 @@
 * api: round 2nd decimal
 * index: add link to github
 * api: add security (needed to refactor c to C and p to P and add S)
+* api: add offset from market value
 
 2015-06-12
 * can set time to maturity for each instrument (allows calendar spreads)

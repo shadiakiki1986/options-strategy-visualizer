@@ -98,4 +98,12 @@ class BlackScholesTest extends PHPUnit_Framework_TestCase
 
     }
 
+    public function testCallPremium() {
+	$bs1=new BlackScholes('C',80,0,0.25,0,2.12);
+	$this->assertTrue($bs1->value(120,0)==40-2.12);
+	$this->assertTrue($bs1->value(100,0)==20-2.12);
+	$this->assertTrue($bs1->value(80,0)==0-2.12);
+	$this->assertTrue($bs1->value(60,0)==0-2.12);
+    }
+
 }

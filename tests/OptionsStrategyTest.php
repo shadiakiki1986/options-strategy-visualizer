@@ -232,4 +232,10 @@ class OptionsStrategyTest extends PHPUnit_Framework_TestCase
 	$this->assertTrue($x==80);
     }
 
+    public function testLongCallPremium() {
+	$bs1=new OptionsStrategy(array(array("q"=>1,"o"=>new BlackScholes('C',80,0,0.25,0,2.12))));
+	$x=$bs1->margin(array(60,80,100,120),0);
+	$this->assertTrue($x==2.12);
+    }
+
 }

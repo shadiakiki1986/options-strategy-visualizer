@@ -3,11 +3,15 @@
 
 class BlackScholes {
 
-var $call_put_flag, $X, $r, $v, $T;
+var $call_put_flag, $X, $r, $v, $T, $V;
 
-function __construct($call_put_flag, $X, $r, $v, $T) {
+function __construct($call_put_flag, $X, $r, $v, $T, $V=0) {
 // call_put_flag: 'c' or anything else for put
 // This T is the maturity date (compare to t in value function)
+// X: strike
+// r: interest rates
+// v: volatility
+// V: market value
 
 	if(!in_array($call_put_flag,array("C","P","S"))) throw new Exception("Unsupported call_put_flag=$call_put_flag");
 	$this->call_put_flag=$call_put_flag;
@@ -15,7 +19,7 @@ function __construct($call_put_flag, $X, $r, $v, $T) {
 	$this->r=$r;
 	$this->v=$v;
 	$this->T=$T;
-
+	$this->V=$V;
 }
 
 	function CND ($x) {
@@ -61,22 +65,22 @@ function __construct($call_put_flag, $X, $r, $v, $T) {
 		$d1 = ( log($S / $this->X) + ($this->r + pow($this->v, 2) / 2) * $Tmt ) / ( $this->v * pow($Tmt, 0.5) );
 		$d2 = $d1 - $this->v * pow($Tmt, 0.5);
 		if ($this->call_put_flag == 'C') {
-			return $S * $this->CND($d1) - $this->X * exp( -$this->r * $Tmt ) * $this->CND($d2);
+			return $S * $this->CND($d1) - $this->X * exp( -$this->r * $Tmt ) * $this->CND($d2) - $this->V;
 		} else { 
-			return $this->X * exp( -$this->r * $Tmt ) * $this->CND(-$d2) - $S * $this->CND(-$d1);
+			return $this->X * exp( -$this->r * $Tmt ) * $this->CND(-$d2) - $S * $this->CND(-$d1) - $this->V;
 		}
 	}
 
 	function value0($S) {
 		if ($this->call_put_flag == 'C') {
-			return max($S - $this->X, 0);
+			return max($S - $this->X, 0) - $this->V;
 		} else { 
-			return max($this->X - $S, 0);
+			return max($this->X - $S, 0) - $this->V;
 		}
 	}
 
 function id() {
-	return "".$this->call_put_flag."_".$this->X."_".$this->r."_".$this->v."_".$this->T;
+	return "".$this->call_put_flag."_".$this->X."_".$this->r."_".$this->v."_".$this->T; // not appending V here because V is the market value, and it should be the same for both options if they are similar
 }
 
 } // end class
