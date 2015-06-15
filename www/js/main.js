@@ -106,7 +106,7 @@ function draw() {
   St=St.St;
 
   var cosPoints = []; 
-  for (var i=0; i<2*St; i+=0.25){ 
+  for (var i=0; i<=2*St; i+=0.25){ 
 	var sum={x:0};
 	$('input[type="checkbox"]').each(function(iteration,item) {
 		aa=item.checked?mygv("#"+item.id,i):0;
