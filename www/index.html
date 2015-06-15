@@ -141,7 +141,7 @@ Presets
 <tr>
 	<td>
 		<ol id="ol"></ol>
-		<p>API <a href="#" id="apiLink">link</a></p>
+		<p>API <a href="#" id="apiLink">margin</a>: <span id="apiValue"></span></p>
 	</td>
 	<td><div id="chart3" style="height:300px; width:500px;"></div></td>
 </tr>
@@ -220,6 +220,16 @@ function doMyUpdate() {
 	if(apiLink.substring(apiLink.length-1,apiLink.length)==",") apiLink = apiLink.substring(0, apiLink.length - 1);
 	apiLink+=']';
         document.getElementById("apiLink").href="api/optionsStrategyMargin.php?"+apiLink;
+	//-------------------------------------------------
+	var req1 = new XMLHttpRequest();
+	req1.onreadystatechange = function() {
+	 document.getElementById('apiValue').innerHTML="Pending";
+	 if (this.readyState == 4) {
+	   document.getElementById('apiValue').innerHTML = this.responseText;
+	 }
+	}
+	req1.open('GET', "api/optionsStrategyMargin.php?"+apiLink, true);
+	req1.send(null);
 }
 
 $(document).ready(function() {
