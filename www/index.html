@@ -8,7 +8,14 @@
 <script type="text/javascript" src="js/main.js"></script>
 </head>
 <body>
-<h1><img src="img/v.jpeg" width="50px"> &nbsp;&nbsp;&nbsp; Options Strategy Visualizer</h1>
+<h1>
+	<img src="img/v.jpeg" width="50px">
+	&nbsp;&nbsp;&nbsp; 
+	Options Strategy Visualizer
+	&nbsp;
+	<a href="https://github.com/shadiakiki1986/options-strategy-visualizer"><img src="img/github.png"></a>
+</h1>
+
 <!--
 <a href="example1.html">Example 1</a>&nbsp;
 |&nbsp;<a href="example2.html">Example 2</a>&nbsp;
@@ -34,6 +41,7 @@ $("#but2").on("click", function() {
 <ul>
 <li>Implied vol. (perc): <input type="range" id="impVol" min="1" max="100" value="25" step="1" /><span id="impVolText">25</span> %</li>
 <li>Margin to be conservative by: <input type="range" id="rd" min="0" max="100" value="100" step="1" /><span id="rdText">100</span> %</li>
+<li>Physical time: <input type="range" id="tPhysical" min="0" max="4" value="0" step="0.05" /><span id="tPhysicalText">0.25</span> years</li>
 <li>Standard margin requirement: 100 x <span id="mrStandard">-</span> Cur (based on <a href="http://www.cboe.com/micro/margin/strategy.aspx">CBOE rulebook</a>)</li>
 <li>Conservative margin: 100 x <span id="mrConservative">-</span> Cur</li>
 </ul>
@@ -72,7 +80,7 @@ Presets
 		|&nbsp;
 		Market Value <input type="range" name="V" min="0" max="10" step="0.01" value="0"> &nbsp;
 		|&nbsp;
-		Time to maturity <input type="range" name="Tmt" min="0" max="4" step="0.05" value="0.25"> years &nbsp;
+		Maturity <input type="range" name="TMaturity" min="0" max="4" step="0.05" value="0.25"> years &nbsp;
 		</form>
 	</li>
 	<li>
@@ -91,7 +99,7 @@ Presets
 		|&nbsp;
 		Market Value <input type="range" name="V" min="0" max="10" step="0.01" value="0"> &nbsp;
 		|&nbsp;
-		Time to maturity <input type="range" name="Tmt" min="0" max="4" step="0.01" value="0.25"> years &nbsp;
+		Maturity <input type="range" name="TMaturity" min="0" max="4" step="0.01" value="0.25"> years &nbsp;
 		</form>
 	</li>
 	<li>
@@ -110,7 +118,7 @@ Presets
 		|&nbsp;
 		Market Value <input type="range" name="V" min="0" max="10" step="0.01" value="0"> &nbsp;
 		|&nbsp;
-		Time to maturity <input type="range" name="Tmt" min="0" max="4" step="0.01" value="0.25"> years &nbsp;
+		Maturity <input type="range" name="TMaturity" min="0" max="4" step="0.01" value="0.25"> years &nbsp;
 		</form>
 	</li>
 	<li>
@@ -129,7 +137,7 @@ Presets
 		|&nbsp;
 		Market Value <input type="range" name="V" min="0" max="10" step="0.01" value="0"> &nbsp;
 		|&nbsp;
-		Time to maturity <input type="range" name="Tmt" min="0" max="4" step="0.01" value="0.25"> years &nbsp;
+		Maturity <input type="range" name="TMaturity" min="0" max="4" step="0.01" value="0.25"> years &nbsp;
 		</form>
 	</li>
 	</ol>	
@@ -155,12 +163,12 @@ Presets
 function setExample(what) {
 	port={};
 	switch(what) {
-	case "Short Spread": port={ "St":125, "i1": {"P":"L", "Q":1, "K":125, "O":"C", "V":1, "Tmt":0.25}, "i2": {"P":"S", "Q":1, "K":100, "O":"C", "V":5, "Tmt":0.25} }; break;
-	case "Long Spread": port={ "St":125, "i1": {"P":"S", "Q":1, "K":125, "O":"C", "V":1, "Tmt":0.25}, "i2": {"P":"L", "Q":1, "K":100, "O":"C", "V":5, "Tmt":0.25} }; break;
-	case "Short Straddle": port={ "St":125, "i1": {"P":"L", "Q":1, "K":125, "O":"P", "V":10, "Tmt":0.25}, "i2": {"P":"L", "Q":1, "K":120, "O":"C", "V":10, "Tmt":0.25} }; break;
-	case "Long Straddle": port={ "St":125, "i1": {"P":"S", "Q":1, "K":125, "O":"P", "V":10, "Tmt":0.25}, "i2": {"P":"S", "Q":1, "K":120, "O":"C", "V":10, "Tmt":0.25} }; break;
-	case "Short Calendar Spread": port={ "St":125, "i1": {"P":"L", "Q":1, "K":125, "O":"C", "V":1, "Tmt":0}, "i2": {"P":"S", "Q":1, "K":125, "O":"C", "V":5, "Tmt":0.25} }; break;
-	case "Long Calendar Spread": port={ "St":125, "i1": {"P":"S", "Q":1, "K":125, "O":"C", "V":1, "Tmt":0}, "i2": {"P":"L", "Q":1, "K":125, "O":"C", "V":5, "Tmt":0.25} }; break;
+	case "Short Spread": port={ "St":125, "i1": {"P":"L", "Q":1, "K":125, "O":"C", "V":1, "TMaturity":0.25}, "i2": {"P":"S", "Q":1, "K":100, "O":"C", "V":5, "TMaturity":0.25} }; break;
+	case "Long Spread": port={ "St":125, "i1": {"P":"S", "Q":1, "K":125, "O":"C", "V":1, "TMaturity":0.25}, "i2": {"P":"L", "Q":1, "K":100, "O":"C", "V":5, "TMaturity":0.25} }; break;
+	case "Short Straddle": port={ "St":125, "i1": {"P":"L", "Q":1, "K":125, "O":"P", "V":10, "TMaturity":0.25}, "i2": {"P":"L", "Q":1, "K":120, "O":"C", "V":10, "TMaturity":0.25} }; break;
+	case "Long Straddle": port={ "St":125, "i1": {"P":"S", "Q":1, "K":125, "O":"P", "V":10, "TMaturity":0.25}, "i2": {"P":"S", "Q":1, "K":120, "O":"C", "V":10, "TMaturity":0.25} }; break;
+	case "Short Calendar Spread": port={ "St":125, "i1": {"P":"L", "Q":1, "K":125, "O":"C", "V":1, "TMaturity":0}, "i2": {"P":"S", "Q":1, "K":125, "O":"C", "V":5, "TMaturity":0.25} }; break;
+	case "Long Calendar Spread": port={ "St":125, "i1": {"P":"S", "Q":1, "K":125, "O":"C", "V":1, "TMaturity":0}, "i2": {"P":"L", "Q":1, "K":125, "O":"C", "V":5, "TMaturity":0.25} }; break;
 	default: alert("Invalid preset");
 	}
 
@@ -178,9 +186,13 @@ function setExample(what) {
 			$("#"+yy+" input[name='O']").prop("checked",false);
 			$("#"+yy+" input[name='O'][value='"+xx.O+"']").prop("checked","checked");
 			$("#"+yy+" input[name='V']").val(xx.V);
-			$("#"+yy+" input[name='Tmt']").val(xx.Tmt);
+			$("#"+yy+" input[name='TMaturity']").val(xx.TMaturity);
 		}
 	});
+	// set tPhysical to 0
+	$("#tPhysical").val(0);
+
+	// update
 	doMyUpdate();	
 }
 
@@ -194,7 +206,7 @@ function doMyUpdate() {
 		'"K":"'+$("#"+$(this).attr("id")+" input[name='K']").val()+'",'+
 		'"O":"'+$("#"+$(this).attr("id")+" input[name='O']:checked").val()+'",'+
 		'"V":"'+$("#"+$(this).attr("id")+" input[name='V']").val()+'",'+
-		'"Tmt":"'+$("#"+$(this).attr("id")+" input[name='Tmt']").val()+'",'+
+		'"TMaturity":"'+$("#"+$(this).attr("id")+" input[name='TMaturity']").val()+'",'+
 		'"St":"'+$("#i0 input[name='St']").val()+'",'+
 		'"Comment":"..."'+
 	'},';
@@ -204,7 +216,7 @@ function doMyUpdate() {
 	if(port2!="[]") handlePort(port2);
 
 	//-----------------------------
-	apiLink="S="+$("#i0 input[name='St']").val()+"&T=0.2&port=[";
+	apiLink="S="+$("#i0 input[name='St']").val()+"&t="+$('#tPhysical').val()+"&port=[";
 	$("#i1,#i2,#i3,#i4").each(function() {
 	if($("#"+$(this).attr("id")+" input[name='P']:checked").val()!="n") {
 		qs=$("#"+$(this).attr("id")+" input[name='P']:checked").val();
@@ -214,6 +226,7 @@ function doMyUpdate() {
 		apiLink+='{'+
 			'"Q":'+qs*$("#"+$(this).attr("id")+" input[name='Q']").val()+','+
 			'"K":'+$("#"+$(this).attr("id")+" input[name='K']").val()+','+
+			'"T":'+$("#"+$(this).attr("id")+" input[name='TMaturity']").val()+','+
 			'"O":"'+ot+'",'+
 			'"r":0,"v":0.25'+
 			'},';

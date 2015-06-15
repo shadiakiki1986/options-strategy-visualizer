@@ -6,12 +6,13 @@ header("Access-Control-Allow-Origin: *");
  Margin required on an options strategy
 
  USAGE
-	CLI	php optionsStrategyMargin.php 100 0.2 '[{"Q": 1,"O":"c","K":70,"r":0,"v":0.25},{"Q":-1,"O":"c","K":80,"r":0,"v":0.25}]'
-		php optionsStrategyMargin.php 100 0.2 '[{"Q":-1,"O":"c","K":70,"r":0,"v":0.25},{"Q": 1,"O":"c","K":80,"r":0,"v":0.25}]'
+	CLI	php optionsStrategyMargin.php 100 0 '[{"Q": 1,"O":"c","K": 70,"r":0,"v":0.25,"T":0.2},{"Q":-1,"O":"c","K": 80,"r":0,"v":0.25,"T":0.2}]'
+		php optionsStrategyMargin.php 100 0 '[{"Q":-1,"O":"c","K": 70,"r":0,"v":0.25,"T":0.2},{"Q": 1,"O":"c","K": 80,"r":0,"v":0.25,"T":0.2}]'
+		php optionsStrategyMargin.php 125 0 '[{"Q":-1,"O":"c","K":125,"r":0,"v":0.25,"T":0.2},{"Q": 1,"O":"c","K":100,"r":0,"v":0.25,"T":0.2}]'
 
 	AJAX
 		 $.ajax({
-		    url:'http://shadi.ly/zboota-server/api/optionsStrategyMargin.php?S=100&T=0.2&port=[{"Q":1,"O":"c","K":70,"r":0,"v":0.25},{"Q":-1,"O":"c","K":80,"r":0,"v":0.25}]',
+		    url:'http://shadi.ly/zboota-server/api/optionsStrategyMargin.php?S=100&t=0.2&port=[{"Q":1,"O":"c","K":70,"r":0,"v":0.25},{"Q":-1,"O":"c","K":80,"r":0,"v":0.25}]',
 		    success: function (data) {
 			console.log(data);
 		    },
@@ -24,12 +25,12 @@ header("Access-Control-Allow-Origin: *");
 if(isset($argc)) {
 	if($argc<3) throw new Exception("Usage: php optionsStrategyMargin.php underlying Tmt portfolio");
 	$S=$argv[1];
-	$T=$argv[2];
+	$t=$argv[2];
 	$port=$argv[3];
 } else {
-	if(!array_key_exists("S",$_GET)||!array_key_exists("T",$_GET)||!array_key_exists("port",$_GET)) throw new Exception("Wrong usage of GET");
+	if(!array_key_exists("S",$_GET)||!array_key_exists("t",$_GET)||!array_key_exists("port",$_GET)) throw new Exception("Wrong usage of GET");
 	$S=$_GET["S"];
-	$T=$_GET["T"];
+	$t=$_GET["t"];
 	$port=$_GET["port"];
 }
 
@@ -39,15 +40,15 @@ require_once ROOT.'/src/BlackScholes.php';
 
 if($port=="") throw new Exception("Please enter your portfolio.\n");
 if($S=="") throw new Exception("Please enter underlying.\n");
-if($T=="") throw new Exception("Please enter maturity.\n");
+if($t=="") throw new Exception("Please enter maturity.\n");
 
 // read from json
 $port=json_decode($port,true);
 // convert to objects
 $S=(float)$S;
-$T=(float)$T;
+$t=(float)$t;
 $port2=array();
-foreach($port as $pi) array_push($port2,array("q"=>$pi["Q"],"o"=>new BlackScholes($pi["O"],$pi["K"],$pi["r"],$pi["v"])));
+foreach($port as $pi) array_push($port2,array("q"=>$pi["Q"],"o"=>new BlackScholes($pi["O"],$pi["K"],$pi["r"],$pi["v"],$pi["T"])));
 
 // build vector of S around underlying
 $Sx=range(0,2*$S,1);
@@ -55,7 +56,7 @@ $Sx=range(0,2*$S,1);
 try {
 	// calculate
 	$zc=new OptionsStrategy($port2);
-	echo $zc->margin($Sx,$T);
+	echo round($zc->margin($Sx,$t)*100)/100;
 } catch (Exception $e) {
         echo $e->getMessage();
         return;

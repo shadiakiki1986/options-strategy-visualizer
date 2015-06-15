@@ -4,7 +4,7 @@ myJsonParse=function(aaa) {
 	oo.K=parseInt(oo.K);
 	oo.V=Number(oo.V);
 	oo.St=parseInt(oo.St);
-	if(!oo.Tmt) alert("No T-t set"); else oo.Tmt=Number(oo.Tmt);
+	if(!oo.hasOwnProperty("Tmt")) alert("No T-t set"); else oo.Tmt=Number(oo.Tmt);
 	return oo;
 };
 
@@ -200,9 +200,23 @@ function handlePort(port) {
 
 	$("#ol").empty();
 	$.each(port, function(iteration,item) {
+		// update item Tmt to remove the physical time passed
+		item.Tmt=Math.max(0,item.TMaturity-$('#tPhysical').val());
+		// check if expired
+		expired=item.Tmt<=0;
+		// list
 		$("#ol").append(
-			$(document.createElement("li")).append(
-				$(document.createElement("input")).attr({id:'o'+iteration,type:"checkbox","class":"cb",value:JSON.stringify(item),checked:true})
+			$(document.createElement("li")
+			).attr({
+				"style":(expired?"background-color:red":"")
+			}).append(
+				$(document.createElement("input")).attr({
+					"id":'o'+iteration,
+					"type":"checkbox",
+					"class":"cb",
+					"value":JSON.stringify(item),
+					"checked":!expired // false if expired
+				})
 			).append(
 				(item.P=="L"?"Long":"Short")
 				+" "+item.Q+"x"
@@ -210,17 +224,20 @@ function handlePort(port) {
 				+" "+item.K
 				+(item.O=="C"?" Call":(item.O=="P"?" Put":" Security"))
 				+(item.O=="C"||item.O=="P"?" at "+item.V:"")
-				+ " (underlying at "+item.St+")" //+", "+item.Comment+")"
+				+" (underlying at "+item.St+")"
+				//+", "+item.Comment+")"
+				+", Expired: "+(expired?"Yes":"No")
 			)
 		);
 	});
 	$(".cb").on("click", draw);
 
 	$('#impVolText').text($('#impVol').val());
-	$('#TmtText').text($('#Tmt').val());
+	$('#TMaturityText').text($('#TMaturity').val());
 	$('#underlyingText').text($('#St').val());
 	$('#rdText' ).text($('#rd').val());
 	$('#rdText2').text($('#rd').val());
+	$('#tPhysicalText').text($('#tPhysical').val());
 
 	draw();
 };

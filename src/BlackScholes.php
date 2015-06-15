@@ -3,15 +3,18 @@
 
 class BlackScholes {
 
-var $call_put_flag, $X, $r, $v;
+var $call_put_flag, $X, $r, $v, $T;
 
-function __construct($call_put_flag, $X, $r, $v) {
+function __construct($call_put_flag, $X, $r, $v, $T) {
 // call_put_flag: 'c' or anything else for put
+// This T is the maturity date (compare to t in value function)
 
 	$this->call_put_flag=$call_put_flag;
 	$this->X=$X;
 	$this->r=$r;
 	$this->v=$v;
+	$this->T=$T;
+
 }
 
 	function CND ($x) {
@@ -32,26 +35,28 @@ function __construct($call_put_flag, $X, $r, $v) {
 		}
 	}
 
-	function value ($S, $T) {
+	function value ($S, $t) {
+	// t: physical time
 		if(is_array($S)) {
 			$o=array();
-			foreach($S as $Si) $o[(string)$Si]=$this->value($Si,$T);
+			foreach($S as $Si) $o[(string)$Si]=$this->value($Si,$t);
 			return $o;
 		}
-		if(is_array($T)) {
+		if(is_array($t)) {
 			$o=array();
-			foreach($T as $Ti) $o[(string)$Ti]=$this->value($S,$Ti);
+			foreach($t as $ti) $o[(string)$ti]=$this->value($S,$ti);
 			return $o;
 		}
 
-		if($T==0) return $this->value0($S);
+		$Tmt=$this->T-$t;
+		if($Tmt==0) return $this->value0($S);
 
-		$d1 = ( log($S / $this->X) + ($this->r + pow($this->v, 2) / 2) * $T ) / ( $this->v * pow($T, 0.5) );
-		$d2 = $d1 - $this->v * pow($T, 0.5);
+		$d1 = ( log($S / $this->X) + ($this->r + pow($this->v, 2) / 2) * $Tmt ) / ( $this->v * pow($Tmt, 0.5) );
+		$d2 = $d1 - $this->v * pow($Tmt, 0.5);
 		if ($this->call_put_flag == 'c') {
-			return $S * $this->CND($d1) - $this->X * exp( -$this->r * $T ) * $this->CND($d2);
+			return $S * $this->CND($d1) - $this->X * exp( -$this->r * $Tmt ) * $this->CND($d2);
 		} else { 
-			return $this->X * exp( -$this->r * $T ) * $this->CND(-$d2) - $S * $this->CND(-$d1);
+			return $this->X * exp( -$this->r * $Tmt ) * $this->CND(-$d2) - $S * $this->CND(-$d1);
 		}
 	}
 
