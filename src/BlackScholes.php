@@ -50,6 +50,7 @@ function __construct($call_put_flag, $X, $r, $v, $T) {
 
 		$Tmt=$this->T-$t;
 		if($Tmt==0) return $this->value0($S);
+		if($Tmt<0) return 0; // expired
 
 		$d1 = ( log($S / $this->X) + ($this->r + pow($this->v, 2) / 2) * $Tmt ) / ( $this->v * pow($Tmt, 0.5) );
 		$d2 = $d1 - $this->v * pow($Tmt, 0.5);
