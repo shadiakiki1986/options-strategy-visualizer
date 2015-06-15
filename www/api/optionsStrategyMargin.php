@@ -48,7 +48,7 @@ $port=json_decode($port,true);
 $S=(float)$S;
 $t=(float)$t;
 $port2=array();
-foreach($port as $pi) array_push($port2,array("q"=>$pi["Q"],"o"=>new BlackScholes($pi["O"],$pi["K"],$pi["r"],$pi["v"],$pi["T"])));
+foreach($port as $pi) array_push($port2,array("q"=>$pi["Q"],"o"=>new BlackScholes($pi["O"],$pi["K"],$pi["r"],$pi["v"],$pi["T"],$pi["V"])));
 
 // build vector of S around underlying
 $Sx=range(0,2*$S,1);
