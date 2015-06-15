@@ -202,4 +202,34 @@ class OptionsStrategyTest extends PHPUnit_Framework_TestCase
 	}
     }
 
+    public function testSecurityLong() {
+	$bs1=new OptionsStrategy(array(array("q"=> 1,"o"=>new BlackScholes('S',80,0,0.25,0))));
+	$x=$bs1->margin(array(60,80,100,120),0);
+	$this->assertTrue($x==0);
+    }
+
+    public function testSecurityShort() {
+	$bs1=new OptionsStrategy(array(array("q"=>-1,"o"=>new BlackScholes('S',80,0,0.25,0))));
+	$x=$bs1->margin(array(60,80,100,120),0);
+	$this->assertTrue($x==120);
+    }
+
+    public function testCoveredCallLong() {
+	$bs1=new OptionsStrategy(array(
+		array("q"=>-1,"o"=>new BlackScholes('C',80,0,0.25,0)),
+		array("q"=> 1,"o"=>new BlackScholes('S',80,0,0.25,0))
+	));
+	$x=$bs1->margin(array(60,80,100,120),0);
+	$this->assertTrue($x==0);
+    }
+
+    public function testCoveredCallShort() {
+	$bs1=new OptionsStrategy(array(
+		array("q"=> 1,"o"=>new BlackScholes('C',80,0,0.25,0)),
+		array("q"=>-1,"o"=>new BlackScholes('S',80,0,0.25,0))
+	));
+	$x=$bs1->margin(array(60,80,100,120),0);
+	$this->assertTrue($x==80);
+    }
+
 }

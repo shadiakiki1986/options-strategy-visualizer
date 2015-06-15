@@ -225,7 +225,7 @@ function handlePort(port) {
 				(item.P=="L"?"Long":"Short")
 				+" "+item.Q+"x"
 				+(item.O=="C"||item.O=="P"?" T-t="+item.Tmt+" years":"")
-				+" "+item.K
+				+(item.O=="C"||item.O=="P"?" "+item.K:"")
 				+(item.O=="C"?" Call":(item.O=="P"?" Put":" Security"))
 				+(item.O=="C"||item.O=="P"?" at "+item.V:"")
 				+" (underlying at "+item.St+")"

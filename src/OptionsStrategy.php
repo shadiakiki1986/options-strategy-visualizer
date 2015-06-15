@@ -25,7 +25,7 @@ function __construct($portfolio) {
 
 	// portfolio being keyed by portfolio ID and stored in class member
 	$this->portfolio=array();
-	foreach($portfolio as $p) $this->portfolio[$p["o"]->id]=$p;
+	foreach($portfolio as $p) $this->portfolio[$p["o"]->id()]=$p;
 }
 
 function loss($S,$t,$mult=1) {
