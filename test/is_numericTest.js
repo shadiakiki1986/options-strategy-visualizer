@@ -10,5 +10,6 @@ describe('is_numeric tests', function() {
   it('is_numeric("avb")', function() { is_numeric("avb").should.eql(false); });
   it('is_numeric(null)', function() { is_numeric(null).should.eql(false); });
   it('is_numeric(undefined)', function() { is_numeric(undefined).should.eql(false); });
+  it('is_numeric("123")', function() { is_numeric("123").should.eql(false); });
 
 }); 

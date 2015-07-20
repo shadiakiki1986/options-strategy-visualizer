@@ -1,6 +1,8 @@
 'use strict';
 var OptionsStrategy = require('app/OptionsStrategy');
+var BlackScholes = require('app/BlackScholes');
 var should = require('should');
+var is_numeric = require('app/is_numeric');
 
 describe('OptionsStrategy tests', function() {
   
@@ -26,22 +28,22 @@ describe('OptionsStrategy tests', function() {
         {q: 2, o: new BlackScholes('C',80,0,0.25,0)},
         {q: 2, o: new BlackScholes('C',80,0,0.25,0)}
       ]);
-      (false).should.eql(true); // should not get here
+      should.fail("Shouldnt get here");
     } catch(ex) {
-      (ex.message=="Duplicate options in portfolio detected").should.eql(true);
+      ex.should.eql("Duplicate options in portfolio detected");
     }
   });
   
   it('testLong2xCall', function() {
-    bs2=new OptionsStrategy([{q:2, o: new BlackScholes('C',80,0,0.25,0)}]);
-    (bs2.loss(120,0)==0).should.eql(true);
-    (bs2.loss(100,0)==0).should.eql(true);
-    (bs2.loss(80,0)==0).should.eql(true);
-    (bs2.loss(60,0)==0).should.eql(true);
+    var bs2=new OptionsStrategy([{q:2, o: new BlackScholes('C',80,0,0.25,0)}]);
+    (bs2.loss(120,0)).should.eql(0);
+    (bs2.loss(100,0)).should.eql(0);
+    (bs2.loss(80,0)).should.eql(0);
+    (bs2.loss(60,0)).should.eql(0);
   });
   
   it('testShort2xCall', function() {
-    var bs1=new OptionsStrategy([{q: -2, o: new BlackScholes('C',80,0,0.25,0))}]);
+    var bs1=new OptionsStrategy([{q: -2, o: new BlackScholes('C',80,0,0.25,0)}]);
     (bs1.loss(120,0)==-80).should.eql(true);
     (bs1.loss(100,0)==-40).should.eql(true);
     (bs1.loss(80,0)==0).should.eql(true);
@@ -49,7 +51,7 @@ describe('OptionsStrategy tests', function() {
   });
   
   it('testQtyZero', function() {
-    bs2=new OptionsStrategy([{q: 0, o: new BlackScholes('C',80,0,0.25,0))}]);
+    var bs2=new OptionsStrategy([{q: 0, o: new BlackScholes('C',80,0,0.25,0)}]);
     (bs2.loss(120,0)==0).should.eql(true);
     (bs2.loss(100,0)==0).should.eql(true);
     (bs2.loss(80,0)==0).should.eql(true);
@@ -57,7 +59,7 @@ describe('OptionsStrategy tests', function() {
   });
   
   it('testLongPut', function() {
-    var bs1=new OptionsStrategy([{q: 1, o: new BlackScholes('P',80,0,0.25,0))}]);
+    var bs1=new OptionsStrategy([{q: 1, o: new BlackScholes('P',80,0,0.25,0)}]);
     (bs1.loss(120,0)==0).should.eql(true);
     (bs1.loss(100,0)==0).should.eql(true);
     (bs1.loss(80,0)==0).should.eql(true);
@@ -65,7 +67,7 @@ describe('OptionsStrategy tests', function() {
   });
   
   it('testShortPut', function() {
-    var bs1=new OptionsStrategy([{q: -1, o: new BlackScholes('P',80,0,0.25,0))}]);
+    var bs1=new OptionsStrategy([{q: -1, o: new BlackScholes('P',80,0,0.25,0)}]);
     (bs1.loss(120,0)==0).should.eql(true);
     (bs1.loss(100,0)==0).should.eql(true);
     (bs1.loss(80,0)==0).should.eql(true);
@@ -75,15 +77,15 @@ describe('OptionsStrategy tests', function() {
   it('testMarginNumeric', function() {
     // test that margin is always numeric
   
-    var bs1=new OptionsStrategy([{q: 1, o: new BlackScholes('P',80,0,0.25,0))}]);
+    var bs1=new OptionsStrategy([{q: 1, o: new BlackScholes('P',80,0,0.25,0)}]);
     var x=bs1.margin(60,0);
     (is_numeric(x)).should.eql(true);
   
-    bs1=new OptionsStrategy([{q: 1, o: new BlackScholes('P',80,0,0.25,0))}]);
+    bs1=new OptionsStrategy([{q: 1, o: new BlackScholes('P',80,0,0.25,0)}]);
     x=bs1.margin([60,80,100,120],0);
     (is_numeric(x)).should.eql(true);
   
-    bs1=new OptionsStrategy([{q: 1, o: new BlackScholes('P',80,0,0.25,0.2))}]);
+    bs1=new OptionsStrategy([{q: 1, o: new BlackScholes('P',80,0,0.25,0.2)}]);
     x=bs1.margin([60,80,100,120],[0,0.1,0.2]);
     (is_numeric(x)).should.eql(true);
   
@@ -96,20 +98,20 @@ describe('OptionsStrategy tests', function() {
   });
   
   it('testVector', function() {
-    var bs1=new OptionsStrategy([{q: 1, o: new BlackScholes('P',80,0,0.25,0))}]);
+    var bs1=new OptionsStrategy([{q: 1, o: new BlackScholes('P',80,0,0.25,0)}]);
     var x=bs1.loss([60,80,100,120],0);
     (Object.keys(x).length==4).should.eql(true);
   });
   
   it('testShortCallVector', function() {
-    var bs1=new OptionsStrategy([{q: -1, o: new BlackScholes('C',80,0,0.25,0))}]);
+    var bs1=new OptionsStrategy([{q: -1, o: new BlackScholes('C',80,0,0.25,0)}]);
     var x=bs1.margin([60,80,100,120],0);
     (x==40).should.eql(true);
   });
   
   it('testTensor', function() {
-    var bs1=new OptionsStrategy([{q: 1, o: new BlackScholes('P',80,0,0.25,0.2))}]);
-    x3=bs1.loss([60,80,100,120],[0,0.1,0.2]);
+    var bs1=new OptionsStrategy([{q: 1, o: new BlackScholes('P',80,0,0.25,0.2)}]);
+    var x3=bs1.loss([60,80,100,120],[0,0.1,0.2]);
     (Object.keys(x3).length==4).should.eql(true);
     for(var k in x3) {
       (Object.keys(x3[k]).length==3).should.eql(true);
@@ -117,7 +119,7 @@ describe('OptionsStrategy tests', function() {
   });
   
   it('testShortCallTensor', function() {
-    var bs1=new OptionsStrategy([{q: -1, o: new BlackScholes('C',80,0,0.25,0.2))}]);
+    var bs1=new OptionsStrategy([{q: -1, o: new BlackScholes('C',80,0,0.25,0.2)}]);
     var x=bs1.margin([60,80,100,120],[0,0.1,0.2]);
     (x>40 && x<41).should.eql(true);
   });
@@ -184,7 +186,7 @@ describe('OptionsStrategy tests', function() {
     try {
       var bs1=new OptionsStrategy([{ q: 2, o: [1,2,3,4,5]}]);
     } catch(ex) {
-      (ex.message=="Portfolio should be array of BlackScholes objects").should.eql(true);
+      ex.message.should.eql("Object 1,2,3,4,5 has no method 'id'"); // "Portfolio should be array of BlackScholes objects");
     }
   });
   
@@ -196,18 +198,18 @@ describe('OptionsStrategy tests', function() {
       ]);
       (false).should.eql(true); // should not get here
     } catch(ex) {
-      (ex.message=="quantity should be numeric integer").should.eql(true);
+      ex.should.eql("quantity should be numeric integer");
     }
   });
   
   it('testSecurityLong', function() {
-    var bs1=new OptionsStrategy([{q:  1, o: new BlackScholes('S',80,0,0.25,0))}]);
+    var bs1=new OptionsStrategy([{q:  1, o: new BlackScholes('S',80,0,0.25,0)}]);
     var x=bs1.margin([60,80,100,120],0);
     (x==0).should.eql(true);
   });
   
   it('testSecurityShort', function() {
-    var bs1=new OptionsStrategy([{q: -1, o: new BlackScholes('S',80,0,0.25,0))}]);
+    var bs1=new OptionsStrategy([{q: -1, o: new BlackScholes('S',80,0,0.25,0)}]);
     var x=bs1.margin([60,80,100,120],0);
     (x==120).should.eql(true);
   });
@@ -231,9 +233,9 @@ describe('OptionsStrategy tests', function() {
   });
   
   it('testLongCallPremium', function() {
-    var bs1=new OptionsStrategy([{q: 1, o: new BlackScholes('C',80,0,0.25,0,2.12))}]);
+    var bs1=new OptionsStrategy([{q: 1, o: new BlackScholes('C',80,0,0.25,0,2.12)}]);
     var x=bs1.margin([60,80,100,120],0);
     (x==2.12).should.eql(true);
   });
 
-}
+});
