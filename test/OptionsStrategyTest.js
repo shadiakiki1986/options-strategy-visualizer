@@ -186,7 +186,7 @@ describe('OptionsStrategy tests', function() {
     try {
       var bs1=new OptionsStrategy([{ q: 2, o: [1,2,3,4,5]}]);
     } catch(ex) {
-      ex.message.should.eql("Object 1,2,3,4,5 has no method 'id'"); // "Portfolio should be array of BlackScholes objects");
+      (ex.message=="Object 1,2,3,4,5 has no method 'id'"||ex.message=="undefined is not a function").should.eql(true); // "Portfolio should be array of BlackScholes objects");
     }
   });
   
