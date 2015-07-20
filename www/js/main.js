@@ -256,8 +256,3 @@ function doRetrieve() {
 		handlePort);
 }
 
-// \Todo why doesn't this work here and only works in window.load in ajaxMgmt.js?
-//$(document).ready(function() {
-//	req('am/list.validAccountIds.html','cid','client.base=Lebanon&format=json');
-//alert("bla");
-//});

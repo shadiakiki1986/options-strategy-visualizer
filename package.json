@@ -1,0 +1,23 @@
+{
+  "name": "options-strategy-visualizer",
+  "version": "1.0.0",
+  "description": "Nodejs library for API exposure of options-strategy-visualizer calculation",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --timeout 120000"
+  },
+  "homepage": "https://genesis.github.com",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/shadiakiki1986/options-strategy-visualizer"
+  },
+  "author": "Shadi Akiki",
+  "license": "WTFPL",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  }
+}
+

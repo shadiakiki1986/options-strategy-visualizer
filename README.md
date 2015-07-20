@@ -26,3 +26,14 @@ It represents
 
 # License
 Licensed under [WTFPL](http://www.wtfpl.net/)
+
+# Testing of php API
+
+    phpunit tests
+
+# Testing of nodejs API
+
+    npm install --dev
+    npm test
+
+
