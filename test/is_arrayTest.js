@@ -1,5 +1,6 @@
 'use strict';
-require('app/is_array');
+var is_array = require('app/is_array');
+var should = require('should');
 
 describe('is_array tests', function() {
 

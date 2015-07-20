@@ -1,5 +1,6 @@
 'use strict';
-require('app/array_sum');
+var array_sum = require('app/array_sum');
+var should = require('should');
 
 describe('array_sum tests', function() {
 
@@ -8,7 +9,8 @@ describe('array_sum tests', function() {
   it('array_sum(123)', function() {
     try {
       array_sum(123).should.eql(123);
-    catch(ex) {
+      should.fail("Shouldnt get here");
+    } catch(ex) {
       ex.should.eql("Not an array");
     }
   });

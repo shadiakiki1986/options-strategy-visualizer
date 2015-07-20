@@ -1,5 +1,6 @@
 'use strict';
-require('app/is_numeric');
+var is_numeric = require('app/is_numeric');
+var should = require('should');
 
 describe('is_numeric tests', function() {
 
