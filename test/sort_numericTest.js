@@ -12,7 +12,7 @@ describe('sort_numeric tests', function() {
       sort_numeric(123);
       should.fail("Shouldnt get here");
     } catch(ex) {
-      ex.message.should.eql("Object 123 has no method 'sort'");
+      (ex.message=="Object 123 has no method 'sort'" || ex.message=="undefined is not a function").should.eql(true); // 2nd message shows up in travis-ci
     }
   });
 
