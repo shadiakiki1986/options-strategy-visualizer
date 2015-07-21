@@ -5,8 +5,6 @@
 # Motivation
 The reason I wrote this tool is that after some [research](http://lmgtfy.com/?q=options+strategy+visualize) for an online tool that visualizes option strategies, I didn't find anything useful.
 
-This tool is hosted [here](http://genesis.akikieng.com/options-strategy-visualizer)
-
 Its calculations are based on CBOE's [rulebook](http://www.cboe.com/micro/margin/strategy.aspx) (p 18)
 
 Here is a list of pages that I checked out before I decided to do this myself
@@ -15,6 +13,10 @@ Here is a list of pages that I checked out before I decided to do this myself
 * http://www.mathworks.com/matlabcentral/fileexchange/17411-visualize-payoffs-of-an-option-strategy/content/butterfly.m
 * http://www.optiontradingtips.com/options101/payoff-diagrams.html
 
+# Usage
+* Browse at http://shadiakiki1986.github.io/options-strategy-visualizer/
+ * It used to be hosted at http://genesis.akikieng.com/options-strategy-visualizer
+* Created github pages branch (https://help.github.com/articles/creating-project-pages-manually/)
 
 # Logo
 I chose the letter '''V''' to be the logo for this tool.
