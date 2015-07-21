@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --timeout 120000",
-    "build": "browserify node_modules/app/index.js -o static/OptStratVis.js" // https://github.com/substack/browserify-handbook#watchify
+    "build": "mkdir -p js && browserify node_modules/app/index.js -o js/OptStratVis.js"
   },
   "homepage": "https://genesis.github.com",
   "repository": {

@@ -45,5 +45,5 @@ Licensed under [WTFPL](http://www.wtfpl.net/)
  * check discontinued-php branch for files
 * The gh-pages javascript files use common code with the nodejs files
  * for this I use browserify
- * in branch master: npm run build
+ * in branch master: npm run build ([source](https://github.com/substack/browserify-handbook#watchify))
  * more notes here later
