@@ -2,7 +2,7 @@
 var OptStratVis = require('app/index');
 var should = require('should');
 
-describe.only('index tests', function() {
+describe('index tests', function() {
   
   it('covered call short', function() {
     var x=OptStratVis([
@@ -11,7 +11,7 @@ describe.only('index tests', function() {
       ],
       [60,80,100,120],
       0);
-    (x==80).should.eql(true);
+    x.should.eql(80);
   });
 
 });
