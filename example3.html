@@ -1,0 +1,66 @@
+<html>
+<head>
+<script type="text/javascript" src="js/vendor/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="js/vendor/jquery.jqplot.min.js"></script>
+<link rel="stylesheet" type="text/css" href="js/vendor/jquery.jqplot.min.css" />
+<script type="text/javascript" src="js/vendor/jqplot.cursor.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+</head>
+<body>
+<h1><img src="img/v.jpeg" width="50px"> &nbsp;&nbsp;&nbsp; Options Strategy Visualizer</h1>
+<div id='menu' style="display:block">
+<!--
+<a href="example1.html">Example 1</a>&nbsp;
+|&nbsp;<a href="example2.html">Example 2</a>&nbsp;
+|&nbsp;<a href="example3.html">Example 3</a>&nbsp;
+<br/>
+-->
+<div id="chart3" style="height:300px; width:500px;"></div>
+<script type="text/javascript">
+function thalesTheorem_yn(x1,y1,x2,y2,xn) {
+	x0=y1-(y2-y1)/(x2-x1)*x1;
+	return(y1*(xn-x0)/(x1-x0));
+}
+
+$(document).ready(function() {
+  var chartPlots = [
+	[ [10,5], [20,10] ],
+	[[13,thalesTheorem_yn(10,5,20,10,13)]]
+	];
+
+  $("#chart3").empty();
+  
+  var plot3 = $.jqplot('chart3', chartPlots, {  
+      series:[{showMarker:false}],
+      title: 'Test thales',
+      axes:{
+        xaxis:{
+          label:'S_T',
+          labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+          labelOptions: {
+            fontFamily: 'Georgia, Serif',
+            fontSize: '12pt'
+          },
+//	      min: 50,
+//	      max: 200
+        },
+        yaxis:{
+          labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+          labelOptions: {
+            fontFamily: 'Georgia, Serif',
+            fontSize: '12pt'
+          },
+//	      min: -210,
+//	      max: +210
+        }
+	  }, // end axes
+      cursor:{
+        show: true,
+        zoom:true,
+        tooltipLocation:'sw'
+        }
+  });
+  });
+</script>
+</body>
+</html>
