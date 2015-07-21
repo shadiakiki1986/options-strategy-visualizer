@@ -16,7 +16,6 @@ Here is a list of pages that I checked out before I decided to do this myself
 # Usage
 * Browse at http://shadiakiki1986.github.io/options-strategy-visualizer/
  * It used to be hosted at http://genesis.akikieng.com/options-strategy-visualizer
-* Created github pages branch (https://help.github.com/articles/creating-project-pages-manually/)
 
 # Logo
 I chose the letter '''V''' to be the logo for this tool.
@@ -29,13 +28,21 @@ It represents
 # License
 Licensed under [WTFPL](http://www.wtfpl.net/)
 
-# Testing of php API
-
-    phpunit tests
-
-# Testing of nodejs API
-
-    npm install --dev
-    npm test
-
-
+# Developer notes
+* Testing of php API: phpunit tests
+* Testing of nodejs API: npm install --dev && npm test
+* Created github pages branch
+ * git checkout --orphan gh-pages
+ * git rm * -rf
+ * echo "whatever" > index.html && git add index.html
+ * git commit -a -m "first gh-pages commit"
+ * git push
+ * git branch # will now show the gh-pages branch and the master branch
+ * git checkout master # to switch
+ * git checkout gh-pages # to switch
+ * [Reference](https://help.github.com/articles/creating-project-pages-manually/)
+* The initial php API was discontinued in favor of nodejs api that I can use with AWS lambda (versus the need to have an EC2 instance running for the php api)
+ * check discontinued-php branch for files
+* The gh-pages javascript files use common code with the nodejs files
+ * for this I use browserify
+ * more notes here later
