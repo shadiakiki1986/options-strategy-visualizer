@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --timeout 120000",
-    "build": "mkdir -p js && browserify node_modules/app/index.js -o js/OptStratVis.js"
+    "build": "browserify node_modules/app/index.js -o ../OptStratVis.js"
   },
   "homepage": "https://genesis.github.com",
   "repository": {
