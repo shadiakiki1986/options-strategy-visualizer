@@ -218,7 +218,7 @@ function doMyUpdate() {
 	if(port2!="[]") handlePort(port2);
 
 	//-----------------------------
-	apiLink="S="+$("#i0 input[name='St']").val()+"&t="+$('#tPhysical').val()+"&port=[";
+	apiLink="S="+$("#i0 input[name='St']").val()+"&Tmt="+$('#tPhysical').val()+"&portfolio=[";
 	$("#i1,#i2,#i3,#i4").each(function() {
 	if($("#"+$(this).attr("id")+" input[name='P']:checked").val()!="n") {
 		qs=$("#"+$(this).attr("id")+" input[name='P']:checked").val();
