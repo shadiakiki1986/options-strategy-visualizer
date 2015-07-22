@@ -4,8 +4,7 @@
   "description": "Nodejs library for API exposure of options-strategy-visualizer calculation",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --timeout 120000",
-    "build": "browserify node_modules/app/index.js -o ../OptStratVis.js"
+    "test": "mocha --timeout 120000"
   },
   "homepage": "https://genesis.github.com",
   "repository": {
@@ -18,8 +17,7 @@
   },
   "devDependencies": {
     "mocha": "*",
-    "should": "*",
-    "browserify": "*"
+    "should": "*"
   }
 }
 
