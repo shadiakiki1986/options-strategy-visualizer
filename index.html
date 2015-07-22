@@ -223,19 +223,22 @@ function doMyUpdate() {
 	if($("#"+$(this).attr("id")+" input[name='P']:checked").val()!="n") {
 		qs=$("#"+$(this).attr("id")+" input[name='P']:checked").val();
 		qs=qs=="S"?-1:1;
-		apiLink+='{'+
-			'"Q":'+qs*$("#"+$(this).attr("id")+" input[name='Q']").val()+','+
-			'"K":'+$("#"+$(this).attr("id")+" input[name='K']").val()+','+
+		apiLink+='%7B'+
+			'"q":'+qs*$("#"+$(this).attr("id")+" input[name='Q']").val()+','+
+			'"X":'+$("#"+$(this).attr("id")+" input[name='K']").val()+','+
 			'"T":'+$("#"+$(this).attr("id")+" input[name='TMaturity']").val()+','+
-			'"O":"'+$("#"+$(this).attr("id")+" input[name='O']:checked").val()+'",'+
+			'"t":"'+$("#"+$(this).attr("id")+" input[name='O']:checked").val()+'",'+
 			'"V":'+$("#"+$(this).attr("id")+" input[name='V']").val()+','+
 			'"r":0,"v":0.25'+
-			'},';
+			'%7D,';
 		}
 	});
 	if(apiLink.substring(apiLink.length-1,apiLink.length)==",") apiLink = apiLink.substring(0, apiLink.length - 1);
 	apiLink+=']';
-        document.getElementById("apiLink").href="api/optionsStrategyMargin.php?"+apiLink;
+//        document.getElementById("apiLink").href="api/optionsStrategyMargin.php?"+apiLink;
+        apiLink2="https://v029nrk9h7.execute-api.us-west-2.amazonaws.com/prod/opstratvis-margin?"+apiLink;
+        document.getElementById("apiLink").href=apiLink2;
+
 	//-------------------------------------------------
 	var req1 = new XMLHttpRequest();
 	req1.onreadystatechange = function() {
@@ -244,7 +247,7 @@ function doMyUpdate() {
 	   document.getElementById('apiValue').innerHTML = this.responseText;
 	 }
 	}
-	req1.open('GET', "api/optionsStrategyMargin.php?"+apiLink, true);
+	req1.open('GET', apiLink2, true);
 	req1.send(null);
 }
 
