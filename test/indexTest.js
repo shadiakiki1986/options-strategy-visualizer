@@ -18,4 +18,14 @@ describe('index tests', function() {
     );
   });
 
+  it('undefined portfolio', function(done) {
+      var x=OptStratVis.margin({
+        S: [60,80,100,120],
+        Tmt: 0},
+        { succeed: function(x) { should.fail("Shouldnt get here 1"); },
+          fail: function(x) { x.should.eql("Cannot call method 'map' of undefined"); done(); }
+        }
+      );
+  });
+
 });
