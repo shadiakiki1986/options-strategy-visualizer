@@ -2,7 +2,7 @@
 var OptStratVis = require('app/index');
 var should = require('should');
 
-describe.only('index tests', function() {
+describe('index tests', function() {
   
   it('covered call short', function(done) {
     var x=OptStratVis.margin({
