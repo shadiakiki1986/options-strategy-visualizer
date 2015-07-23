@@ -2,7 +2,7 @@
 var OptStratVis = require('app/index');
 var should = require('should');
 
-describe('index tests', function() {
+describe.only('index tests', function() {
   
   it('covered call short', function(done) {
     var x=OptStratVis.margin({
@@ -23,7 +23,7 @@ describe('index tests', function() {
         S: [60,80,100,120],
         Tmt: 0},
         { succeed: function(x) { should.fail("Shouldnt get here 1"); },
-          fail: function(x) { x.should.eql("Cannot call method 'map' of undefined"); done(); }
+          fail: function(x) { x.should.eql("Invalid parameters passed"); done(); }
         }
       );
   });
