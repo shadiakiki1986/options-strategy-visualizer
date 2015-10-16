@@ -61,3 +61,6 @@ The gh-pages javascript files use common code with the nodejs files
 
 ## first checkout of remote branch locally
 git checkout -b gh-pages origin/gh-pages
+
+## Google analytics
+I just added my personal email's google analytics tracking ID of my github pages to this SPA
