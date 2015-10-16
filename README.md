@@ -29,6 +29,9 @@ It represents
 Licensed under [WTFPL](http://www.wtfpl.net/)
 
 # Developer notes
+## Where are the files?
+There are 2 branches in this repository. `master` contains the javascript responsible for all the core calculations. `gh-pages` is the html and javascript of the SPA interface. The `index.html` in `gh-pages` references the main javscript file in `master`. If any of the core calculations are updated in the `master` branch, following the `updating common js code...` section below to update the published app at `http://shadiakiki1986.github.io/options-strategy-visualizer/`. If any of the files in the `gh-pages` branch are updated, no special steps are required to update the published app.
+
 ## Testing
 * Testing of php API: phpunit tests
 * Testing of nodejs API: npm install --dev && npm test
