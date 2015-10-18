@@ -38,15 +38,17 @@ There are 2 branches in this repository. `master` contains the javascript respon
 
 ## gh-pages
 Created github pages branch
-* git checkout --orphan gh-pages
-* git rm * -rf
-* echo "whatever" > index.html && git add index.html
-* git commit -a -m "first gh-pages commit"
-* git push
-* git branch # will now show the gh-pages branch and the master branch
-* git checkout master # to switch
-* git checkout gh-pages # to switch
-* [Reference](https://help.github.com/articles/creating-project-pages-manually/)
+
+    git checkout --orphan gh-pages
+    git rm * -rf
+    echo "whatever" > index.html && git add index.html
+    git commit -a -m "first gh-pages commit"
+    git push
+    git branch # will now show the gh-pages branch and the master branch
+    git checkout master # to switch
+    git checkout gh-pages # to switch
+
+[Reference](https://help.github.com/articles/creating-project-pages-manually/)
 
 ## initial php API
 * The initial php API was discontinued in favor of nodejs api that I can use with AWS lambda (versus the need to have an EC2 instance running for the php api)
